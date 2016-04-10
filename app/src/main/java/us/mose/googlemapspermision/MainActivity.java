@@ -1,24 +1,27 @@
 package us.mose.googlemapspermision;
 
 import android.app.Dialog;
+import android.location.Geocoder;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -105,6 +108,35 @@ public class MainActivity extends AppCompatActivity {
         LatLng latLng = new LatLng(lat, lng);
         CameraUpdate update = CameraUpdateFactory.newLatLngZoom(latLng,zoom);
         mMap.moveCamera(update);
+    }
+
+    private void hideSoftKeyboard(View v){
+        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+
+    }
+    public void geoLocate (View v) throws IOException {
+        hideSoftKeyboard(v);
+        TextView tv = (TextView) findViewById(R.id.editText1);
+        String searchString = null;
+
+        searchString = tv.getText().toString();
+
+        Toast.makeText(this, "Søger efter: " + searchString, Toast.LENGTH_SHORT).show();
+
+        Geocoder gc = new Geocoder(this);
+        List<android.location.Address> list = gc.getFromLocationName(searchString, 1);
+
+        if (list.size() > 0) {
+            android.location.Address add = list.get(0);
+            String locality = add.getLocality();
+            Toast.makeText(this, "Fundet " + locality, Toast.LENGTH_SHORT).show();
+            double lat = add.getLatitude();
+            double lng = add.getLongitude();
+            gotoLocation(lat, lng, 15);
+
+        }
+
 
     }
 }
