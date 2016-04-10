@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GoogleMapsPermision</string>
+    <string name="action_settings">Settings</string>
+    <string name="apikey">AIzaSyCLTmUSpVgSFsZd6p3mLA0-xqVWWyud2GI</string>
+</resources>
