@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_map);
             if(initMap()){
                 Toast.makeText(this, "Klar til at mappe",Toast.LENGTH_SHORT).show();
-                gotoLocation(56.440547,10.135221,9);
+                gotoLocation(56.440547,10.135221,10);
             }else{
                 Toast.makeText(this, "Kortet er ikke til rådighed",Toast.LENGTH_SHORT).show();
             }
